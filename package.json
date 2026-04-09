@@ -1,12 +1,27 @@
 {
   "name": "claude-website",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "test": "npx playwright test",
+    "test:bot": "npx playwright test tests/fill-form.spec.js",
+    "test:form": "npx playwright test tests/contact-form.spec.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.102.1",
+    "cors": "^2.8.6",
+    "express": "^4.22.1",
+    "googleapis": "^144.0.0",
+    "node-cron": "^4.2.1",
+    "resend": "^6.10.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.59.1"
+  }
 }
