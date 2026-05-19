@@ -1,0 +1,409 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JRH Engineering — Email Signature</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #ECEEED;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 44px 20px 60px;
+    color: #1A1A1A;
+  }
+
+  .page-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 19px; font-weight: 800;
+    color: #1A3A2B; margin-bottom: 4px; letter-spacing: -0.3px;
+  }
+  .page-sub { font-size: 12px; color: #6B6B6B; margin-bottom: 32px; }
+
+  /* ── Editor ── */
+  .editor-panel {
+    background: #fff; border: 1px solid #D4D4CC; border-radius: 12px;
+    padding: 26px 30px; width: 100%; max-width: 680px; margin-bottom: 28px;
+    box-shadow: 0 1px 8px rgba(0,0,0,0.05);
+  }
+  .editor-panel h2 {
+    font-family: 'Montserrat', sans-serif; font-size: 10px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1.4px; color: #2C6B4F;
+    margin-bottom: 18px; padding-bottom: 10px; border-bottom: 1px solid #EBEBEB;
+  }
+  .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 18px; }
+  .fg { display: flex; flex-direction: column; gap: 4px; }
+  .fg.full { grid-column: 1 / -1; }
+  label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.9px; color: #888; }
+  input[type="text"], input[type="email"], input[type="tel"] {
+    border: 1px solid #D4D4CC; border-radius: 6px; padding: 8px 11px;
+    font-family: 'Inter', sans-serif; font-size: 13px; color: #1A1A1A;
+    outline: none; background: #FAFAFA; transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  input:focus { border-color: #2C6B4F; background: #fff; box-shadow: 0 0 0 3px rgba(44,107,79,0.09); }
+
+  .actions { display: flex; gap: 10px; margin-top: 18px; flex-wrap: wrap; align-items: center; }
+  .btn {
+    font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.9px; padding: 9px 18px;
+    border: none; border-radius: 6px; cursor: pointer; transition: all 0.18s;
+  }
+  .btn-primary { background: #2C6B4F; color: #fff; }
+  .btn-primary:hover { background: #1A3A2B; }
+  .btn-orange { background: #B8521A; color: #fff; }
+  .btn-orange:hover { background: #8F3E12; }
+  .btn-outline { background: #fff; color: #2C6B4F; border: 1.5px solid #2C6B4F; }
+  .btn-outline:hover { background: #F0F7F4; }
+  .btn-green { background: #1A3A2B; color: #fff; }
+  .btn-green:hover { background: #0F2219; }
+  .actions-note { font-size: 11px; color: #6B6B6B; margin-top: 10px; line-height: 1.5; }
+  #dl-status { font-size: 12px; color: #2C6B4F; font-weight: 600; display: none; margin-left: 4px; }
+
+  /* ── Preview shell ── */
+  .preview-label {
+    font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 1.2px; color: #6B6B6B; margin-bottom: 12px; text-align: center;
+  }
+  .preview-shell {
+    background: #fff; border-radius: 12px; padding: 36px 40px;
+    box-shadow: 0 1px 16px rgba(0,0,0,0.07);
+    width: 100%; max-width: 700px;
+    display: flex; justify-content: center;
+  }
+
+  /* ══════════════════════════════
+     SIGNATURE — Option A: Logo Left
+     ══════════════════════════════ */
+  #sig {
+    background: #ffffff;
+    display: inline-flex;
+    align-items: stretch;
+    gap: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 4px 0;
+  }
+
+  /* Logo column */
+  .sig-logo-col {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-right: 22px;
+    flex-shrink: 0;
+  }
+  .sig-logo-col img {
+    width: 96px;
+    height: 96px;
+    object-fit: contain;
+    display: block;
+  }
+
+  /* Vertical divider */
+  .sig-vdivider {
+    width: 1.5px;
+    background: #2C6B4F;
+    border-radius: 2px;
+    flex-shrink: 0;
+    margin: 4px 0;
+  }
+
+  /* Info column */
+  .sig-info {
+    padding-left: 22px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0;
+    flex: 1;
+  }
+
+  /* Name */
+  .sig-name {
+    font-family: 'Montserrat', Montserrat, Arial, sans-serif;
+    font-size: 17px; font-weight: 800;
+    color: #111111; letter-spacing: -0.3px; line-height: 1.2;
+    margin-bottom: 2px;
+    display: block;
+  }
+  /* Credential separate line */
+  .sig-cred-inline {
+    font-family: 'Montserrat', Montserrat, Arial, sans-serif;
+    font-size: 15px; font-weight: 600;
+    color: #B8521A; letter-spacing: -0.2px;
+  }
+  /* Title */
+  .sig-title {
+    font-family: 'Inter', Inter, Arial, sans-serif;
+    font-size: 12px; font-weight: 500; color: #6B6B6B;
+    margin-bottom: 1px; display: block;
+  }
+  /* Company */
+  .sig-company {
+    font-family: 'Montserrat', Montserrat, Arial, sans-serif;
+    font-size: 12px; font-weight: 700; color: #2C6B4F;
+    margin-bottom: 11px; display: block;
+  }
+
+  /* Thin dark divider under company */
+  .sig-hdivider {
+    border: none; border-top: 1px solid #C8C8C4;
+    margin: 0 0 12px 0; width: 100%;
+  }
+
+  /* Contact rows */
+  .sig-row {
+    display: flex; align-items: center;
+    margin-bottom: 7px;
+  }
+  .sig-row:last-of-type { margin-bottom: 0; }
+
+  .ic {
+    width: 17px; height: 17px; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    flex-shrink: 0; margin-right: 10px;
+  }
+  .ic-phone { background: #2C6B4F; }
+  .ic-email { background: #6B4FA8; }
+  .ic-web   { background: #1A6FB8; }
+  .ic-li    { background: #0077B5; }
+  .ic svg   { width: 9px; height: 9px; fill: #fff; }
+
+  .sig-row a, .sig-row span {
+    font-family: 'Inter', Inter, Arial, sans-serif;
+    font-size: 11.5px; color: #222222; text-decoration: none;
+  }
+  .sig-row a:hover { color: #2C6B4F; }
+
+  /* Bottom divider + motto */
+  .sig-motto-wrap {
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px solid #D4D4CC;
+  }
+  .sig-motto {
+    font-family: 'Inter', Inter, Arial, sans-serif;
+    font-size: 10.5px; font-style: italic; color: #2C6B4F;
+    line-height: 1.5; display: block;
+  }
+</style>
+</head>
+<body>
+
+<p class="page-title">JRH Engineering — Email Signature</p>
+<p class="page-sub">Edit fields below · Preview updates live · Download as PNG or JPG</p>
+
+<!-- EDITOR -->
+<div class="editor-panel">
+  <h2>Signature Details</h2>
+  <div class="field-grid">
+    <div class="fg">
+      <label>First Name</label>
+      <input type="text" id="f-fname" value="Jennifer" oninput="updateSig()">
+    </div>
+    <div class="fg">
+      <label>Last Name</label>
+      <input type="text" id="f-lname" value="Henrichs" oninput="updateSig()">
+    </div>
+    <div class="fg">
+      <label>Credential (e.g. M. Eng., P.E.)</label>
+      <input type="text" id="f-cred" value="M. Eng." oninput="updateSig()">
+    </div>
+    <div class="fg">
+      <label>Title</label>
+      <input type="text" id="f-title" value="President" oninput="updateSig()">
+    </div>
+    <div class="fg full">
+      <label>Company Name</label>
+      <input type="text" id="f-company" value="JRH Engineering" oninput="updateSig()">
+    </div>
+    <div class="fg">
+      <label>Phone</label>
+      <input type="tel" id="f-phone" value="(281) 489-5066" oninput="updateSig()">
+    </div>
+    <div class="fg">
+      <label>Email</label>
+      <input type="email" id="f-email" value="jlhenrichs@jrhengineering.net" oninput="updateSig()">
+    </div>
+    <div class="fg">
+      <label>Website</label>
+      <input type="text" id="f-website" value="www.jrhengineering.net" oninput="updateSig()">
+    </div>
+    <div class="fg">
+      <label>LinkedIn URL</label>
+      <input type="text" id="f-linkedin" value="https://www.linkedin.com/in/jennifer-henrichs-531a2386/" oninput="updateSig()">
+    </div>
+    <div class="fg full">
+      <label>Motto / Tagline</label>
+      <input type="text" id="f-motto" value="Engineering Excellence. Delivered on Time. Built on Value." oninput="updateSig()">
+    </div>
+  </div>
+  <div class="actions">
+    <button class="btn btn-primary" onclick="downloadPNG()">&#8595; Download PNG</button>
+    <button class="btn btn-orange" onclick="downloadJPG()">&#8595; Download JPG</button>
+    <button class="btn btn-green" onclick="copyHTML()">&#10003; Copy Signature for Gmail</button>
+    <span id="dl-status">&#10003; Done!</span>
+  </div>
+  <p class="actions-note">&#9432; PNG/JPG are images — links won&#39;t be clickable. Use <strong>Copy HTML</strong> and paste into Gmail Settings &rarr; Signature, or Outlook &rarr; Signature editor for a fully clickable signature.</p>
+</div>
+
+<!-- PREVIEW -->
+<p class="preview-label">Live Preview</p>
+<div class="preview-shell">
+
+  <table id="sig" cellpadding="0" cellspacing="0" border="0" style="background:#ffffff; border-collapse:collapse; font-family:Arial,Helvetica,sans-serif;">
+  <tr>
+    <!-- Logo -->
+    <td style="padding:16px 20px 16px 4px; vertical-align:middle; text-align:center; width:124px;">
+      <img src="https://ricky-asuncion.vercel.app/jrh-engineering/jrh-logo.png" width="96" height="96" alt="JRH Engineering" style="display:block; width:96px; height:96px;">
+    </td>
+    <!-- Vertical divider -->
+    <td style="width:2px; background:#2C6B4F; padding:0; font-size:0; line-height:0;">&nbsp;</td>
+    <!-- Info -->
+    <td style="padding:16px 8px 16px 22px; vertical-align:middle;">
+
+      <!-- Name + credential -->
+      <p style="margin:0 0 3px 0; padding:0; line-height:1.2;">
+        <span id="sig-name" style="font-family:Montserrat,Arial,sans-serif; font-size:18px; font-weight:800; color:#111111; letter-spacing:-0.3px;">Jennifer Henrichs</span><span id="sig-cred" style="font-family:Montserrat,Arial,sans-serif; font-size:15px; font-weight:600; color:#B8521A;">, M. Eng.</span>
+      </p>
+      <!-- Title -->
+      <p id="sig-title" style="margin:0 0 2px 0; padding:0; font-family:Arial,sans-serif; font-size:12px; color:#6B6B6B; line-height:1.4;">President</p>
+      <!-- Company -->
+      <p id="sig-co" style="margin:0 0 12px 0; padding:0; font-family:Montserrat,Arial,sans-serif; font-size:12px; font-weight:700; color:#2C6B4F; line-height:1.4;">JRH Engineering</p>
+
+      <!-- Divider -->
+      <table cellpadding="0" cellspacing="0" border="0" style="width:100%; border-collapse:collapse; margin-bottom:12px;">
+        <tr><td style="height:1px; background:#C8C8C4; font-size:0; line-height:0; overflow:hidden;">&nbsp;</td></tr>
+      </table>
+
+      <!-- Contact rows -->
+      <table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;">
+        <!-- Phone -->
+        <tr>
+          <td style="padding:0 10px 8px 0; vertical-align:middle;">
+            <svg width="20" height="20" viewBox="0 0 20 20" style="display:block;"><circle cx="10" cy="10" r="10" fill="#2C6B4F"/><path d="M13.75 11.48v1.25a.83.83 0 0 1-.91.83 8.25 8.25 0 0 1-3.6-1.28A8.13 8.13 0 0 1 6.73 9.76 8.25 8.25 0 0 1 5.45 6.2a.83.83 0 0 1 .82-.9h1.25a.83.83 0 0 1 .83.72c.053.4.15.793.29 1.17a.83.83 0 0 1-.19.88l-.53.53a6.67 6.67 0 0 0 2.62 2.62l.53-.53a.83.83 0 0 1 .88-.19c.377.14.77.237 1.17.29a.83.83 0 0 1 .72.84z" fill="#ffffff"/></svg>
+          </td>
+          <td style="padding:0 0 8px 0; font-family:Arial,sans-serif; font-size:12px; color:#222222; vertical-align:middle;">
+            <a id="sig-phone" href="tel:2814895066" style="color:#222222; text-decoration:none;">(281) 489-5066</a>
+          </td>
+        </tr>
+        <!-- Email -->
+        <tr>
+          <td style="padding:0 10px 8px 0; vertical-align:middle;">
+            <svg width="20" height="20" viewBox="0 0 20 20" style="display:block;"><circle cx="10" cy="10" r="10" fill="#6B4FA8"/><rect x="4.5" y="6.5" width="11" height="7.5" rx="1" fill="#ffffff"/><polyline points="4.5,7 10,11 15.5,7" fill="none" stroke="#6B4FA8" stroke-width="1.3" stroke-linecap="round"/></svg>
+          </td>
+          <td style="padding:0 0 8px 0; font-family:Arial,sans-serif; font-size:12px; color:#222222; vertical-align:middle;">
+            <a id="sig-email" href="mailto:jlhenrichs@jrhengineering.net" style="color:#222222; text-decoration:none;">jlhenrichs@jrhengineering.net</a>
+          </td>
+        </tr>
+        <!-- Website -->
+        <tr>
+          <td style="padding:0 10px 8px 0; vertical-align:middle;">
+            <svg width="20" height="20" viewBox="0 0 20 20" style="display:block;"><circle cx="10" cy="10" r="10" fill="#1A6FB8"/><circle cx="10" cy="10" r="5.5" fill="none" stroke="#ffffff" stroke-width="1.1"/><line x1="4.5" y1="10" x2="15.5" y2="10" stroke="#ffffff" stroke-width="1.1"/><path d="M10 4.5 Q12.2 7.2 12.2 10 Q12.2 12.8 10 15.5 Q7.8 12.8 7.8 10 Q7.8 7.2 10 4.5z" fill="none" stroke="#ffffff" stroke-width="1.1"/></svg>
+          </td>
+          <td style="padding:0 0 8px 0; font-family:Arial,sans-serif; font-size:12px; color:#222222; vertical-align:middle;">
+            <a id="sig-web" href="https://www.jrhengineering.net" style="color:#222222; text-decoration:none;">www.jrhengineering.net</a>
+          </td>
+        </tr>
+        <!-- LinkedIn -->
+        <tr>
+          <td style="padding:0 10px 0 0; vertical-align:middle;">
+            <svg width="20" height="20" viewBox="0 0 20 20" style="display:block;"><circle cx="10" cy="10" r="10" fill="#0077B5"/><rect x="5.5" y="8.5" width="1.8" height="6" fill="#ffffff"/><circle cx="6.4" cy="6.5" r="1.05" fill="#ffffff"/><path d="M9.8 8.5h1.7v.82a1.9 1.9 0 0 1 1.68-.9c1.8 0 2.12 1.18 2.12 2.72v3.36h-1.8v-3c0-.72-.01-1.64-1-1.64s-1.15.78-1.15 1.59v3.05H9.8V8.5z" fill="#ffffff"/></svg>
+          </td>
+          <td style="padding:0; font-family:Arial,sans-serif; font-size:12px; color:#222222; vertical-align:middle;">
+            <a id="sig-li" href="https://www.linkedin.com/in/jennifer-henrichs-531a2386/" style="color:#222222; text-decoration:none;">LinkedIn</a>
+          </td>
+        </tr>
+      </table>
+
+      <!-- Bottom divider + motto -->
+      <table cellpadding="0" cellspacing="0" border="0" style="width:100%; border-collapse:collapse; margin-top:12px;">
+        <tr>
+          <td style="border-top:1px solid #D4D4CC; padding-top:10px;">
+            <span id="sig-motto" style="font-family:Arial,Helvetica,sans-serif; font-size:11px; font-style:italic; color:#2C6B4F; line-height:1.4;">&ldquo;Engineering Excellence. Delivered on Time. Built on Value.&rdquo;</span>
+          </td>
+        </tr>
+      </table>
+
+    </td>
+  </tr>
+</table>
+
+</div>
+
+<script>
+  function v(id) { return document.getElementById(id).value.trim(); }
+
+  function updateSig() {
+    const fname = v('f-fname'), lname = v('f-lname'), cred = v('f-cred');
+    const baseName = [fname, lname].filter(Boolean).join(' ') || '[Name]';
+    const credEl = document.getElementById('sig-cred');
+    credEl.textContent = cred ? ', ' + cred : '';
+    document.getElementById('sig-name').textContent = baseName;
+
+    document.getElementById('sig-title').textContent = v('f-title');
+    document.getElementById('sig-co').textContent = v('f-company');
+
+    const phone = v('f-phone');
+    document.getElementById('sig-phone').textContent = phone;
+    document.getElementById('sig-phone').href = 'tel:' + phone.replace(/\D/g,'');
+
+    const email = v('f-email');
+    document.getElementById('sig-email').textContent = email;
+    document.getElementById('sig-email').href = 'mailto:' + email;
+
+    const web = v('f-website');
+    document.getElementById('sig-web').textContent = web;
+    document.getElementById('sig-web').href = web.startsWith('http') ? web : 'https://' + web;
+
+    const li = v('f-linkedin');
+    document.getElementById('sig-li').href = li;
+
+    const motto = v('f-motto');
+    document.getElementById('sig-motto').textContent = motto ? '“' + motto + '”' : '';
+  }
+
+  function showStatus(msg) {
+    const s = document.getElementById('dl-status');
+    s.textContent = msg;
+    s.style.display = 'inline';
+    setTimeout(() => s.style.display = 'none', 2800);
+  }
+
+  function captureSignature(type) {
+    html2canvas(document.getElementById('sig'), {
+      scale: 3, backgroundColor: '#ffffff', useCORS: true, logging: false
+    }).then(canvas => {
+      const a = document.createElement('a');
+      a.download = type === 'png' ? 'JRH-Email-Signature.png' : 'JRH-Email-Signature.jpg';
+      a.href = type === 'png' ? canvas.toDataURL('image/png') : canvas.toDataURL('image/jpeg', 0.95);
+      a.click();
+      showStatus('✓ Downloaded!');
+    });
+  }
+
+  function downloadPNG() { captureSignature('png'); }
+  function downloadJPG() { captureSignature('jpg'); }
+
+  function copyHTML() {
+    const el = document.getElementById('sig');
+    const htmlContent = el.outerHTML;
+    const blob = new Blob([htmlContent], { type: 'text/html' });
+    const item = new ClipboardItem({ 'text/html': blob });
+    navigator.clipboard.write([item])
+      .then(() => showStatus('✓ Copied! Paste directly into Gmail signature editor'))
+      .catch(() => {
+        // Fallback: copy raw HTML
+        navigator.clipboard.writeText(htmlContent)
+          .then(() => showStatus('✓ HTML code copied (paste into Outlook HTML editor)'));
+      });
+  }
+</script>
+</body>
+</html>
