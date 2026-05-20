@@ -239,6 +239,10 @@
       <label>LinkedIn URL</label>
       <input type="text" id="f-linkedin" value="https://www.linkedin.com/in/jennifer-henrichs-531a2386/" oninput="updateSig()">
     </div>
+    <div class="fg">
+      <label>Location</label>
+      <input type="text" id="f-loc" value="TX, FL, and NC" oninput="updateSig()">
+    </div>
     <div class="fg full">
       <label>Motto / Tagline</label>
       <input type="text" id="f-motto" value="Engineering Excellence. Delivered on Time. Built on Value." oninput="updateSig()">
@@ -307,9 +311,16 @@
         </tr>
         <!-- LinkedIn -->
         <tr>
-          <td style="padding:0 10px 0 0; vertical-align:middle; font-size:17px; line-height:1;">&#128279;</td>
-          <td style="padding:0; font-family:Arial,sans-serif; font-size:12px; color:#222222; vertical-align:middle;">
+          <td style="padding:0 10px 8px 0; vertical-align:middle; font-size:17px; line-height:1;">&#128279;</td>
+          <td style="padding:0 0 8px 0; font-family:Arial,sans-serif; font-size:12px; color:#222222; vertical-align:middle;">
             <a id="sig-li" href="https://www.linkedin.com/in/jennifer-henrichs-531a2386/" style="color:#222222; text-decoration:none;">LinkedIn</a>
+          </td>
+        </tr>
+        <!-- Location -->
+        <tr>
+          <td style="padding:0 10px 0 0; vertical-align:middle; font-size:17px; line-height:1;">&#128205;</td>
+          <td style="padding:0; font-family:Arial,sans-serif; font-size:12px; color:#222222; vertical-align:middle;">
+            <span id="sig-loc">TX, FL, and NC</span>
           </td>
         </tr>
       </table>
@@ -360,6 +371,8 @@
     const li = v('f-linkedin');
     const liEl = document.getElementById('sig-li');
     if (li) { liEl.href = li; } else { liEl.removeAttribute('href'); }
+
+    document.getElementById('sig-loc').textContent = v('f-loc');
 
     const motto = v('f-motto');
     document.getElementById('sig-motto').textContent = motto ? '“' + motto + '”' : '';
