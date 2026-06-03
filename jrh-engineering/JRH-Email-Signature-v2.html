@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JRH Engineering — Email Signature v2</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #ECEEED;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 44px 20px 60px;
+    color: #1A1A1A;
+    overflow-x: hidden;
+  }
+
+  .page-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 19px; font-weight: 800;
+    color: #1A3A2B; margin-bottom: 4px; letter-spacing: -0.3px;
+  }
+  .page-sub { font-size: 12px; color: #6B6B6B; margin-bottom: 32px; }
+
+  .editor-panel {
+    background: #fff; border: 1px solid #D4D4CC; border-radius: 12px;
+    padding: 26px 30px; width: 100%; max-width: 680px; margin-bottom: 28px;
+    box-shadow: 0 1px 8px rgba(0,0,0,0.05);
+  }
+  .editor-panel h2 {
+    font-family: 'Montserrat', sans-serif; font-size: 10px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1.4px; color: #2C6B4F;
+    margin-bottom: 18px; padding-bottom: 10px; border-bottom: 1px solid #EBEBEB;
+  }
+  .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 18px; }
+  .fg { display: flex; flex-direction: column; gap: 4px; }
+  .fg.full { grid-column: 1 / -1; }
+  label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.9px; color: #888; }
+  input[type="text"], input[type="email"], input[type="tel"] {
+    border: 1px solid #D4D4CC; border-radius: 6px; padding: 8px 11px;
+    font-family: 'Inter', sans-serif; font-size: 13px; color: #1A1A1A;
+    outline: none; background: #FAFAFA; transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  input:focus { border-color: #2C6B4F; background: #fff; box-shadow: 0 0 0 3px rgba(44,107,79,0.09); }
+
+  .actions { display: flex; gap: 10px; margin-top: 18px; flex-wrap: wrap; align-items: center; }
+  .btn {
+    font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.9px; padding: 9px 18px;
+    border: none; border-radius: 6px; cursor: pointer; transition: all 0.18s;
+  }
+  .btn-primary { background: #2C6B4F; color: #fff; }
+  .btn-primary:hover { background: #1A3A2B; }
+  .btn-orange { background: #B8521A; color: #fff; }
+  .btn-orange:hover { background: #8F3E12; }
+  .btn-green { background: #1A3A2B; color: #fff; }
+  .btn-green:hover { background: #0F2219; }
+  .actions-note { font-size: 11px; color: #6B6B6B; margin-top: 10px; line-height: 1.5; }
+  #dl-status { font-size: 12px; color: #2C6B4F; font-weight: 600; display: none; margin-left: 4px; }
+
+  .preview-label {
+    font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 1.2px; color: #6B6B6B; margin-bottom: 12px; text-align: center;
+  }
+  .preview-shell {
+    background: #fff; border-radius: 12px; padding: 36px 40px;
+    box-shadow: 0 1px 16px rgba(0,0,0,0.07);
+    width: 100%; max-width: 780px;
+    display: flex; justify-content: center; overflow: hidden;
+  }
+</style>
+</head>
+<body>
+
+<p class="page-title">JRH Engineering — Email Signature v2</p>
+<p class="page-sub">Edit fields below &middot; Preview updates live &middot; Download as PNG or copy for Gmail</p>
+
+<!-- EDITOR -->
+<div class="editor-panel">
+  <h2>Signature Details</h2>
+  <div class="field-grid">
+    <div class="fg">
+      <label>First Name</label>
+      <input type="text" id="f-fname" value="Jennifer" oninput="updateSig()">
+    </div>
+    <div class="fg">
+      <label>Last Name</label>
+      <input type="text" id="f-lname" value="Henrichs" oninput="updateSig()">
+    </div>
+    <div class="fg">
+      <label>Title / Position</label>
+      <input type="text" id="f-title" value="President" oninput="updateSig()">
+    </div>
+    <div class="fg">
+      <label>Company Name</label>
+      <input type="text" id="f-company" value="JRH Engineering" oninput="updateSig()">
+    </div>
+    <div class="fg">
+      <label>Direct Phone</label>
+      <input type="tel" id="f-direct" placeholder="(281) 489-5066" oninput="updateSig()">
+    </div>
+    <div class="fg">
+      <label>Main Phone</label>
+      <input type="tel" id="f-main" value="800-227-9635" oninput="updateSig()">
+    </div>
+    <div class="fg">
+      <label>Email</label>
+      <input type="email" id="f-email" value="email@jrhengineering.net" oninput="updateSig()">
+    </div>
+    <div class="fg">
+      <label>Website</label>
+      <input type="text" id="f-website" value="www.jrhengineering.net" oninput="updateSig()">
+    </div>
+    <div class="fg full">
+      <label>Tagline</label>
+      <input type="text" id="f-motto" value="Engineering Excellence. Delivered on Time. Built on Value." oninput="updateSig()">
+    </div>
+    <div class="fg full">
+      <label>Locations</label>
+      <input type="text" id="f-locations" value="Manvel, TX (HQ) • Houston • Orlando • Charlotte" oninput="updateSig()">
+    </div>
+  </div>
+  <div class="actions">
+    <button class="btn btn-primary" onclick="downloadPNG()">&#8595; Download PNG</button>
+    <button class="btn btn-orange" onclick="downloadJPG()">&#8595; Download JPG</button>
+    <button class="btn btn-green" onclick="copyHTML()">&#10003; Copy for Gmail</button>
+    <span id="dl-status">&#10003; Done!</span>
+  </div>
+  <p class="actions-note">&#9432; PNG/JPG = image only (links won't click). Use <strong>Copy for Gmail</strong> &rarr; paste into Gmail Settings &rarr; Signature editor for a fully clickable signature.</p>
+</div>
+
+<!-- PREVIEW -->
+<p class="preview-label">Live Preview</p>
+<div class="preview-shell">
+
+<!-- ═══════════════════════════════════════════
+     SIGNATURE TABLE v2
+     ═══════════════════════════════════════════ -->
+<table id="sig" cellpadding="0" cellspacing="0" border="0"
+  style="background:#ffffff; border-collapse:collapse; font-family:Arial,Helvetica,sans-serif; table-layout:auto; width:100%;">
+
+  <!-- ── TOP ROW: Logo | Divider | Name + Contacts ── -->
+  <tr>
+
+    <!-- LOGO -->
+    <td style="padding:14px 18px 14px 0; vertical-align:middle; width:130px;">
+      <img id="sig-logo" src="1.jpg" width="120" alt="JRH Engineering"
+        style="display:block; width:120px; height:auto; max-width:120px;">
+    </td>
+
+    <!-- VERTICAL DIVIDER -->
+    <td style="width:1px; background:#CCCCCC; padding:0; font-size:0; line-height:0;">&nbsp;</td>
+
+    <!-- NAME + CONTACTS -->
+    <td style="padding:14px 0 14px 22px; vertical-align:middle;">
+
+      <!-- Name -->
+      <p style="margin:0 0 2px 0; padding:0; line-height:1.1;">
+        <span id="sig-name" style="font-family:Montserrat,Arial,sans-serif; font-size:22px; font-weight:800; color:#1A2E1A; letter-spacing:-0.3px;">Full Name</span>
+      </p>
+      <!-- Title -->
+      <p id="sig-title" style="margin:0 0 3px 0; padding:0; font-family:Arial,Helvetica,sans-serif; font-size:12px; color:#666666; line-height:1.3;">Title</p>
+      <!-- Company -->
+      <p id="sig-co" style="margin:0 0 14px 0; padding:0; font-family:Montserrat,Arial,sans-serif; font-size:13px; font-weight:700; color:#2C6B4F; line-height:1.3;">JRH Engineering</p>
+
+      <!-- Contact rows -->
+      <table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;">
+
+        <!-- Phone -->
+        <tr>
+          <td style="padding:0 10px 7px 0; vertical-align:middle;">
+            <table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse; width:20px; height:20px;">
+              <tr>
+                <td style="width:20px; height:20px; background:#2C6B4F; border-radius:50%; text-align:center; vertical-align:middle; padding:0; font-family:Arial,Helvetica,sans-serif; font-size:11px; color:#ffffff; line-height:20px;">&#9742;</td>
+              </tr>
+            </table>
+          </td>
+          <td id="sig-phone-cell" style="padding:0 0 7px 0; font-family:Arial,Helvetica,sans-serif; font-size:11px; color:#333333; vertical-align:middle; white-space:nowrap;">
+            Main: <a href="tel:8002279635" style="color:#333333; text-decoration:none;">800-227-9635</a>
+          </td>
+        </tr>
+
+        <!-- Email -->
+        <tr>
+          <td style="padding:0 10px 7px 0; vertical-align:middle;">
+            <table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse; width:20px; height:20px;">
+              <tr>
+                <td style="width:20px; height:20px; background:#2C6B4F; border-radius:50%; text-align:center; vertical-align:middle; padding:0; font-family:Arial,Helvetica,sans-serif; font-size:10px; color:#ffffff; line-height:20px;">&#9993;</td>
+              </tr>
+            </table>
+          </td>
+          <td style="padding:0 0 7px 0; font-family:Arial,Helvetica,sans-serif; font-size:11px; color:#333333; vertical-align:middle;">
+            <a id="sig-email" href="mailto:email@jrhengineering.net" style="color:#333333; text-decoration:none;">email@jrhengineering.net</a>
+          </td>
+        </tr>
+
+        <!-- Website -->
+        <tr>
+          <td style="padding:0 10px 0 0; vertical-align:middle;">
+            <table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse; width:20px; height:20px;">
+              <tr>
+                <td style="width:20px; height:20px; background:#2C6B4F; border-radius:50%; text-align:center; vertical-align:middle; padding:0; font-family:Arial,Helvetica,sans-serif; font-size:9px; font-weight:bold; color:#ffffff; line-height:20px;">W</td>
+              </tr>
+            </table>
+          </td>
+          <td style="padding:0; font-family:Arial,Helvetica,sans-serif; font-size:11px; color:#333333; vertical-align:middle;">
+            <a id="sig-web" href="https://www.jrhengineering.net" style="color:#333333; text-decoration:none;">www.jrhengineering.net</a>
+          </td>
+        </tr>
+
+      </table>
+    </td>
+  </tr>
+
+  <!-- ── HORIZONTAL DIVIDER ── -->
+  <tr>
+    <td colspan="3" style="padding:0; height:1px; background:#D8D8D8; font-size:0; line-height:0;">&nbsp;</td>
+  </tr>
+
+  <!-- ── BOTTOM ROW: Tagline + Locations + Licensing ── -->
+  <tr>
+    <td colspan="3" style="padding:12px 0 10px 0;">
+
+      <!-- Tagline -->
+      <p id="sig-motto" style="margin:0 0 9px 0; padding:0; font-family:Georgia,'Times New Roman',serif; font-size:11px; font-style:italic; font-weight:bold; color:#2C6B4F; line-height:1.4;">Engineering Excellence. Delivered on Time. Built on Value.</p>
+
+      <!-- Locations row -->
+      <table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse; margin-bottom:6px;">
+        <tr>
+          <td style="padding:0 8px 0 0; vertical-align:middle; font-size:13px; line-height:1;">&#128205;</td>
+          <td style="font-family:Arial,Helvetica,sans-serif; font-size:10px; color:#444444; vertical-align:middle; white-space:nowrap;">
+            <span id="sig-locs">Manvel, TX (HQ) &bull; Houston &bull; Orlando &bull; Charlotte</span>
+          </td>
+        </tr>
+      </table>
+
+      <!-- Licensing row -->
+      <table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;">
+        <tr>
+          <td style="padding:0 8px 0 0; vertical-align:middle; font-family:Arial,Helvetica,sans-serif; font-size:13px; font-weight:bold; color:#2C6B4F; line-height:1;">&#10003;</td>
+          <td style="font-family:Arial,Helvetica,sans-serif; font-size:10px; color:#444444; vertical-align:middle; white-space:nowrap;">
+            Texas Firm License No. F-10385 &nbsp;|&nbsp; Licensed in TX, FL &amp; NC &nbsp;|&nbsp; <span style="color:#2C6B4F; font-weight:700;">WBE &bull; WOSB Certified</span>
+          </td>
+        </tr>
+      </table>
+
+    </td>
+  </tr>
+
+</table>
+<!-- ═══════════════════════════════════════════ -->
+
+</div>
+
+<script>
+  function v(id) { return document.getElementById(id).value.trim(); }
+
+  function updateSig() {
+    const fname = v('f-fname'), lname = v('f-lname');
+    document.getElementById('sig-name').textContent =
+      [fname, lname].filter(Boolean).join(' ') || 'Full Name';
+
+    document.getElementById('sig-title').textContent = v('f-title') || 'Title';
+    document.getElementById('sig-co').textContent    = v('f-company') || 'JRH Engineering';
+
+    // Phone: "Direct: {d} | Main: {m}" or "Main: {m}"
+    const direct = v('f-direct');
+    const main   = v('f-main');
+    const cell   = document.getElementById('sig-phone-cell');
+    let phoneHTML = '';
+    if (direct) {
+      const dTel = 'tel:' + direct.replace(/\D/g, '');
+      phoneHTML += `Direct: <a href="${dTel}" style="color:#333333;text-decoration:none;">${escH(direct)}</a>`;
+      if (main) phoneHTML += ' &nbsp;|&nbsp; ';
+    }
+    if (main) {
+      const mTel = 'tel:' + main.replace(/\D/g, '');
+      phoneHTML += `Main: <a href="${mTel}" style="color:#333333;text-decoration:none;">${escH(main)}</a>`;
+    }
+    cell.innerHTML = phoneHTML;
+
+    // Email
+    const email   = v('f-email');
+    const emailEl = document.getElementById('sig-email');
+    emailEl.textContent = email || 'email@jrhengineering.net';
+    if (email) emailEl.href = 'mailto:' + email; else emailEl.removeAttribute('href');
+
+    // Website
+    const web   = v('f-website');
+    const webEl = document.getElementById('sig-web');
+    webEl.textContent = web || 'www.jrhengineering.net';
+    if (web) webEl.href = web.startsWith('http') ? web : 'https://' + web; else webEl.removeAttribute('href');
+
+    // Tagline
+    const motto = v('f-motto');
+    document.getElementById('sig-motto').textContent = motto || '';
+
+    // Locations
+    document.getElementById('sig-locs').textContent =
+      v('f-locations') || 'Manvel, TX (HQ) • Houston • Orlando • Charlotte';
+
+    fitPreview();
+  }
+
+  function escH(s) {
+    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  function fitPreview() {
+    const sig   = document.getElementById('sig');
+    const shell = document.querySelector('.preview-shell');
+    sig.style.zoom = 1;
+    const available = shell.clientWidth - 80;
+    const natural   = sig.offsetWidth;
+    if (natural > available && available > 0) {
+      sig.style.zoom = available / natural;
+    }
+  }
+  window.addEventListener('resize', fitPreview);
+
+  function showStatus(msg) {
+    const s = document.getElementById('dl-status');
+    s.textContent = msg;
+    s.style.display = 'inline';
+    setTimeout(() => s.style.display = 'none', 2800);
+  }
+
+  function captureSignature(type) {
+    html2canvas(document.getElementById('sig'), {
+      scale: 3, backgroundColor: '#ffffff', useCORS: true, allowTaint: true, logging: false
+    }).then(canvas => {
+      const a = document.createElement('a');
+      a.download = type === 'png' ? 'JRH-Email-Signature-v2.png' : 'JRH-Email-Signature-v2.jpg';
+      a.href = type === 'png' ? canvas.toDataURL('image/png') : canvas.toDataURL('image/jpeg', 0.95);
+      a.click();
+      showStatus('&#10003; Downloaded!');
+    });
+  }
+
+  function downloadPNG() { captureSignature('png'); }
+  function downloadJPG() { captureSignature('jpg'); }
+
+  async function copyHTML() {
+    const el = document.getElementById('sig');
+    let html = el.outerHTML;
+
+    // Swap local path for hosted URL so the logo loads in Gmail
+    html = html.replace(/src="[^"]*1\.jpg[^"]*"/, 'src="https://ricky-asuncion.vercel.app/jrh-engineering/1.jpg"');
+
+    const blob = new Blob([html], { type: 'text/html' });
+    const item = new ClipboardItem({ 'text/html': blob });
+    navigator.clipboard.write([item])
+      .then(() => showStatus('&#10003; Copied! Paste into Gmail signature editor.'))
+      .catch(() => {
+        navigator.clipboard.writeText(html)
+          .then(() => showStatus('&#10003; HTML copied.'));
+      });
+  }
+
+  // Init
+  updateSig();
+  fitPreview();
+</script>
+</body>
+</html>

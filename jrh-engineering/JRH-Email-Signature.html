@@ -335,24 +335,12 @@
   function downloadPNG() { captureSignature('png'); }
   function downloadJPG() { captureSignature('jpg'); }
 
-  async function getLogoBase64() {
-    const img = document.getElementById('sig-logo');
-    const canvas = document.createElement('canvas');
-    canvas.width  = img.naturalWidth  || img.width  || 140;
-    canvas.height = img.naturalHeight || img.height || 140;
-    canvas.getContext('2d').drawImage(img, 0, 0);
-    try { return canvas.toDataURL('image/jpeg', 0.92); } catch(e) { return img.src; }
-  }
-
   async function copyHTML() {
     const el = document.getElementById('sig');
     let html = el.outerHTML;
 
-    // Embed logo as base64 so it works when pasted into Gmail
-    try {
-      const b64 = await getLogoBase64();
-      html = html.replace(/src="[^"]*1\.jpg[^"]*"/, `src="${b64}"`);
-    } catch(e) {}
+    // Swap local path for hosted URL so the logo loads in Gmail
+    html = html.replace(/src="[^"]*1\.jpg[^"]*"/, 'src="https://ricky-asuncion.vercel.app/jrh-engineering/1.jpg"');
 
     const blob = new Blob([html], { type: 'text/html' });
     const item = new ClipboardItem({ 'text/html': blob });
