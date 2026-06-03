@@ -1,10 +1,10 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>JRH Engineering — Email Signature</title>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<title>JRH Engineering — Email Signature Generator</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -27,10 +27,9 @@
   }
   .page-sub { font-size: 12px; color: #6B6B6B; margin-bottom: 32px; }
 
-  /* ── Editor ── */
   .editor-panel {
     background: #fff; border: 1px solid #D4D4CC; border-radius: 12px;
-    padding: 26px 30px; width: 100%; max-width: 680px; margin-bottom: 28px;
+    padding: 26px 30px; width: 100%; max-width: 720px; margin-bottom: 28px;
     box-shadow: 0 1px 8px rgba(0,0,0,0.05);
   }
   .editor-panel h2 {
@@ -59,14 +58,11 @@
   .btn-primary:hover { background: #1A3A2B; }
   .btn-orange { background: #B8521A; color: #fff; }
   .btn-orange:hover { background: #8F3E12; }
-  .btn-outline { background: #fff; color: #2C6B4F; border: 1.5px solid #2C6B4F; }
-  .btn-outline:hover { background: #F0F7F4; }
   .btn-green { background: #1A3A2B; color: #fff; }
   .btn-green:hover { background: #0F2219; }
   .actions-note { font-size: 11px; color: #6B6B6B; margin-top: 10px; line-height: 1.5; }
   #dl-status { font-size: 12px; color: #2C6B4F; font-weight: 600; display: none; margin-left: 4px; }
 
-  /* ── Preview shell ── */
   .preview-label {
     font-size: 10px; font-weight: 700; text-transform: uppercase;
     letter-spacing: 1.2px; color: #6B6B6B; margin-bottom: 12px; text-align: center;
@@ -74,130 +70,15 @@
   .preview-shell {
     background: #fff; border-radius: 12px; padding: 36px 40px;
     box-shadow: 0 1px 16px rgba(0,0,0,0.07);
-    width: 100%; max-width: 700px;
-    display: flex; justify-content: center;
-  }
-
-  /* ══════════════════════════════
-     SIGNATURE — Option A: Logo Left
-     ══════════════════════════════ */
-  #sig {
-    background: #ffffff;
-    display: inline-flex;
-    align-items: stretch;
-    gap: 0;
-    font-family: Arial, Helvetica, sans-serif;
-    padding: 4px 0;
-  }
-
-  /* Logo column */
-  .sig-logo-col {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding-right: 22px;
-    flex-shrink: 0;
-  }
-  .sig-logo-col img {
-    width: 96px;
-    height: 96px;
-    object-fit: contain;
-    display: block;
-  }
-
-  /* Vertical divider */
-  .sig-vdivider {
-    width: 1.5px;
-    background: #2C6B4F;
-    border-radius: 2px;
-    flex-shrink: 0;
-    margin: 4px 0;
-  }
-
-  /* Info column */
-  .sig-info {
-    padding-left: 22px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 0;
-    flex: 1;
-  }
-
-  /* Name */
-  .sig-name {
-    font-family: 'Montserrat', Montserrat, Arial, sans-serif;
-    font-size: 17px; font-weight: 800;
-    color: #111111; letter-spacing: -0.3px; line-height: 1.2;
-    margin-bottom: 2px;
-    display: block;
-  }
-  /* Credential separate line */
-  .sig-cred-inline {
-    font-family: 'Montserrat', Montserrat, Arial, sans-serif;
-    font-size: 15px; font-weight: 600;
-    color: #B8521A; letter-spacing: -0.2px;
-  }
-  /* Title */
-  .sig-title {
-    font-family: 'Inter', Inter, Arial, sans-serif;
-    font-size: 12px; font-weight: 500; color: #6B6B6B;
-    margin-bottom: 1px; display: block;
-  }
-  /* Company */
-  .sig-company {
-    font-family: 'Montserrat', Montserrat, Arial, sans-serif;
-    font-size: 12px; font-weight: 700; color: #2C6B4F;
-    margin-bottom: 11px; display: block;
-  }
-
-  /* Thin dark divider under company */
-  .sig-hdivider {
-    border: none; border-top: 1px solid #C8C8C4;
-    margin: 0 0 12px 0; width: 100%;
-  }
-
-  /* Contact rows */
-  .sig-row {
-    display: flex; align-items: center;
-    margin-bottom: 7px;
-  }
-  .sig-row:last-of-type { margin-bottom: 0; }
-
-  .ic {
-    width: 17px; height: 17px; border-radius: 50%;
-    display: inline-flex; align-items: center; justify-content: center;
-    flex-shrink: 0; margin-right: 10px;
-  }
-  .ic-phone { background: #2C6B4F; }
-  .ic-email { background: #6B4FA8; }
-  .ic-web   { background: #1A6FB8; }
-  .ic-li    { background: #0077B5; }
-  .ic svg   { width: 9px; height: 9px; fill: #fff; }
-
-  .sig-row a, .sig-row span {
-    font-family: 'Inter', Inter, Arial, sans-serif;
-    font-size: 11.5px; color: #222222; text-decoration: none;
-  }
-  .sig-row a:hover { color: #2C6B4F; }
-
-  /* Bottom divider + motto */
-  .sig-motto-wrap {
-    margin-top: 12px;
-    padding-top: 10px;
-    border-top: 1px solid #D4D4CC;
-  }
-  .sig-motto {
-    font-family: 'Inter', Inter, Arial, sans-serif;
-    font-size: 10.5px; font-style: italic; color: #2C6B4F;
-    line-height: 1.5; display: block;
+    width: 100%; max-width: 980px;
+    display: flex; justify-content: center; overflow-x: auto;
   }
 </style>
 </head>
 <body>
 
-<p class="page-title">JRH Engineering — Email Signature</p>
-<p class="page-sub">Edit fields below · Preview updates live · Download as PNG or JPG</p>
+<p class="page-title">JRH Engineering — Email Signature Generator</p>
+<p class="page-sub">Edit fields below &middot; Preview updates live &middot; Download as PNG or copy for Gmail</p>
 
 <!-- EDITOR -->
 <div class="editor-panel">
@@ -212,131 +93,189 @@
       <input type="text" id="f-lname" value="Henrichs" oninput="updateSig()">
     </div>
     <div class="fg">
-      <label>Credential (e.g. M. Eng., P.E.)</label>
-      <input type="text" id="f-cred" value="M. Eng." oninput="updateSig()">
-    </div>
-    <div class="fg">
-      <label>Title</label>
+      <label>Title / Position</label>
       <input type="text" id="f-title" value="President" oninput="updateSig()">
     </div>
-    <div class="fg full">
+    <div class="fg">
       <label>Company Name</label>
       <input type="text" id="f-company" value="JRH Engineering" oninput="updateSig()">
     </div>
     <div class="fg">
-      <label>Phone</label>
-      <input type="tel" id="f-phone" value="(281) 489-5066" oninput="updateSig()">
+      <label>Direct Phone</label>
+      <input type="tel" id="f-direct" placeholder="(281) 489-5066" oninput="updateSig()">
+    </div>
+    <div class="fg">
+      <label>Main Phone</label>
+      <input type="tel" id="f-main" value="800-227-9635" oninput="updateSig()">
     </div>
     <div class="fg">
       <label>Email</label>
-      <input type="email" id="f-email" value="jlhenrichs@jrhengineering.net" oninput="updateSig()">
+      <input type="email" id="f-email" value="email@jrhengineering.net" oninput="updateSig()">
     </div>
     <div class="fg">
       <label>Website</label>
       <input type="text" id="f-website" value="www.jrhengineering.net" oninput="updateSig()">
     </div>
-    <div class="fg">
-      <label>LinkedIn URL</label>
-      <input type="text" id="f-linkedin" value="https://www.linkedin.com/in/jennifer-henrichs-531a2386/" oninput="updateSig()">
-    </div>
-    <div class="fg">
-      <label>Location</label>
-      <input type="text" id="f-loc" value="TX | FL | NC" oninput="updateSig()">
+    <div class="fg full">
+      <label>Tagline</label>
+      <input type="text" id="f-motto" value="Engineering Excellence. Delivered on Time. Built on Value." oninput="updateSig()">
     </div>
     <div class="fg full">
-      <label>Motto / Tagline</label>
-      <input type="text" id="f-motto" value="Engineering Excellence. Delivered on Time. Built on Value." oninput="updateSig()">
+      <label>Locations</label>
+      <input type="text" id="f-locations" value="Manvel (HQ) &bull; Houston &bull; Orlando &bull; Charlotte" oninput="updateSig()">
     </div>
   </div>
   <div class="actions">
     <button class="btn btn-primary" onclick="downloadPNG()">&#8595; Download PNG</button>
     <button class="btn btn-orange" onclick="downloadJPG()">&#8595; Download JPG</button>
-    <button class="btn btn-green" onclick="copyHTML()">&#10003; Copy Signature for Gmail</button>
+    <button class="btn btn-green" onclick="copyHTML()">&#10003; Copy for Gmail</button>
     <span id="dl-status">&#10003; Done!</span>
   </div>
-  <p class="actions-note">&#9432; PNG/JPG are images — links won&#39;t be clickable. Use <strong>Copy HTML</strong> and paste into Gmail Settings &rarr; Signature, or Outlook &rarr; Signature editor for a fully clickable signature.</p>
+  <p class="actions-note">&#9432; PNG/JPG = image only (links won't click). Use <strong>Copy for Gmail</strong> &rarr; paste into Gmail Settings &rarr; Signature editor for a fully clickable signature.</p>
 </div>
 
 <!-- PREVIEW -->
 <p class="preview-label">Live Preview</p>
 <div class="preview-shell">
 
-  <table id="sig" cellpadding="0" cellspacing="0" border="0" style="background:#ffffff; border-collapse:collapse; font-family:Arial,Helvetica,sans-serif;">
-  <tr>
-    <!-- Logo -->
-    <td style="padding:16px 20px 16px 4px; vertical-align:middle; text-align:center; width:124px;">
-      <img src="https://ricky-asuncion.vercel.app/jrh-engineering/jrh-logo.png" width="96" height="96" alt="JRH Engineering" style="display:block; width:96px; height:96px;">
-    </td>
-    <!-- Vertical divider -->
-    <td style="width:2px; background:#2C6B4F; padding:0; font-size:0; line-height:0;">&nbsp;</td>
-    <!-- Info -->
-    <td style="padding:16px 8px 16px 22px; vertical-align:middle;">
+<!-- ═══════════════════════════════════════════
+     SIGNATURE TABLE
+     ═══════════════════════════════════════════ -->
+<table id="sig" cellpadding="0" cellspacing="0" border="0"
+  style="background:#ffffff; border-collapse:collapse; font-family:Arial,Helvetica,sans-serif; table-layout:auto;">
+<tr>
 
-      <!-- Name + credential -->
-      <p style="margin:0 0 3px 0; padding:0; line-height:1.2;">
-        <span id="sig-name" style="font-family:Montserrat,Arial,sans-serif; font-size:18px; font-weight:800; color:#111111; letter-spacing:-0.3px;">Jennifer Henrichs</span><span id="sig-cred" style="font-family:Montserrat,Arial,sans-serif; font-size:15px; font-weight:600; color:#B8521A;">, M. Eng.</span>
-      </p>
-      <!-- Title -->
-      <p id="sig-title" style="margin:0 0 2px 0; padding:0; font-family:Arial,sans-serif; font-size:12px; color:#6B6B6B; line-height:1.4;">President</p>
-      <!-- Company -->
-      <p id="sig-co" style="margin:0 0 12px 0; padding:0; font-family:Montserrat,Arial,sans-serif; font-size:12px; font-weight:700; color:#2C6B4F; line-height:1.4;">JRH Engineering</p>
+  <!-- ① LOGO COLUMN -->
+  <td style="padding:16px 18px 16px 14px; vertical-align:middle; width:185px; background:#ffffff;">
+    <img id="sig-logo" src="1.jpg" width="170" alt="JRH Engineering"
+      style="display:block; width:170px; height:auto; max-width:170px;">
+  </td>
 
-      <!-- Divider -->
-      <table cellpadding="0" cellspacing="0" border="0" style="width:100%; border-collapse:collapse; margin-bottom:12px;">
-        <tr><td style="height:1px; background:#C8C8C4; font-size:0; line-height:0; overflow:hidden;">&nbsp;</td></tr>
-      </table>
+  <!-- DIVIDER -->
+  <td style="width:1px; background:#CCCCCC; padding:0; font-size:0; line-height:0;">&nbsp;</td>
 
-      <!-- Contact rows -->
-      <table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;">
-        <!-- Phone -->
-        <tr>
-          <td style="padding:0 10px 8px 0; vertical-align:middle; font-size:17px; line-height:1;">&#128222;</td>
-          <td style="padding:0 0 8px 0; font-family:Arial,sans-serif; font-size:12px; color:#222222; vertical-align:middle;">
-            <a id="sig-phone" href="tel:2814895066" style="color:#222222; text-decoration:none;">(281) 489-5066</a>
-          </td>
-        </tr>
-        <!-- Email -->
-        <tr>
-          <td style="padding:0 10px 8px 0; vertical-align:middle; font-size:17px; line-height:1;">&#128231;</td>
-          <td style="padding:0 0 8px 0; font-family:Arial,sans-serif; font-size:12px; color:#222222; vertical-align:middle;">
-            <a id="sig-email" href="mailto:jlhenrichs@jrhengineering.net" style="color:#222222; text-decoration:none;">jlhenrichs@jrhengineering.net</a>
-          </td>
-        </tr>
-        <!-- Website -->
-        <tr>
-          <td style="padding:0 10px 8px 0; vertical-align:middle; font-size:17px; line-height:1;">&#127760;</td>
-          <td style="padding:0 0 8px 0; font-family:Arial,sans-serif; font-size:12px; color:#222222; vertical-align:middle;">
-            <a id="sig-web" href="https://www.jrhengineering.net" style="color:#222222; text-decoration:none;">www.jrhengineering.net</a>
-          </td>
-        </tr>
-        <!-- LinkedIn -->
-        <tr>
-          <td style="padding:0 10px 8px 0; vertical-align:middle; font-size:17px; line-height:1;">&#128279;</td>
-          <td style="padding:0 0 8px 0; font-family:Arial,sans-serif; font-size:12px; color:#222222; vertical-align:middle;">
-            <a id="sig-li" href="https://www.linkedin.com/in/jennifer-henrichs-531a2386/" style="color:#222222; text-decoration:none;">LinkedIn</a>
-          </td>
-        </tr>
-        <!-- Location -->
-        <tr>
-          <td style="padding:0 10px 0 0; vertical-align:middle; font-size:17px; line-height:1;">&#128205;</td>
-          <td style="padding:0; font-family:Arial,sans-serif; font-size:12px; color:#222222; vertical-align:middle;">
-            <span id="sig-loc">TX | FL | NC</span>
-          </td>
-        </tr>
-      </table>
+  <!-- ② NAME / GREETING COLUMN -->
+  <td style="padding:16px 18px; vertical-align:middle; background:#ffffff; min-width:145px;">
+    <p style="margin:0 0 8px 0; padding:0; font-family:Arial,Helvetica,sans-serif; font-size:10px; color:#999999; line-height:1;">Best Regards,</p>
+    <p style="margin:0 0 3px 0; padding:0; line-height:1.1;">
+      <span id="sig-name" style="font-family:Montserrat,Arial,sans-serif; font-size:18px; font-weight:800; color:#111111; letter-spacing:-0.3px;">[Full Name]</span>
+    </p>
+    <p id="sig-title" style="margin:0 0 5px 0; padding:0; font-family:Arial,Helvetica,sans-serif; font-size:11px; color:#999999; line-height:1.3;">[Title]</p>
+    <p id="sig-co" style="margin:0; padding:0; font-family:Montserrat,Arial,sans-serif; font-size:12px; font-weight:700; color:#2C6B4F; line-height:1.3;">JRH Engineering</p>
+  </td>
 
-      <!-- Bottom divider + motto -->
-      <table cellpadding="0" cellspacing="0" border="0" style="width:100%; border-collapse:collapse; margin-top:12px;">
-        <tr>
-          <td style="border-top:1px solid #D4D4CC; padding-top:10px;">
-            <span id="sig-motto" style="font-family:Arial,Helvetica,sans-serif; font-size:11px; font-style:italic; color:#2C6B4F; line-height:1.4;">&ldquo;Engineering Excellence. Delivered on Time. Built on Value.&rdquo;</span>
-          </td>
-        </tr>
-      </table>
+  <!-- DIVIDER -->
+  <td style="width:1px; background:#CCCCCC; padding:0; font-size:0; line-height:0;">&nbsp;</td>
 
-    </td>
-  </tr>
+  <!-- ③ CONTACT COLUMN -->
+  <td style="padding:16px 22px; vertical-align:middle; background:#ffffff;">
+    <table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;">
+
+      <!-- Phone -->
+      <tr>
+        <td style="padding:0 11px 9px 0; vertical-align:middle;">
+          <table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse; width:24px; height:24px;">
+            <tr>
+              <td style="width:24px; height:24px; background:#2C6B4F; border-radius:50%; text-align:center; vertical-align:middle; padding:0; overflow:hidden;">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                </svg>
+              </td>
+            </tr>
+          </table>
+        </td>
+        <td id="sig-phone-cell" style="padding:0 0 9px 0; font-family:Arial,Helvetica,sans-serif; font-size:11.5px; color:#333333; vertical-align:middle; white-space:nowrap;">
+          Main: <a href="tel:8002279635" style="color:#333333; text-decoration:none;">800-227-9635</a>
+        </td>
+      </tr>
+
+      <!-- Email -->
+      <tr>
+        <td style="padding:0 11px 9px 0; vertical-align:middle;">
+          <table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse; width:24px; height:24px;">
+            <tr>
+              <td style="width:24px; height:24px; background:#2C6B4F; border-radius:50%; text-align:center; vertical-align:middle; padding:0; overflow:hidden;">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                </svg>
+              </td>
+            </tr>
+          </table>
+        </td>
+        <td style="padding:0 0 9px 0; font-family:Arial,Helvetica,sans-serif; font-size:11.5px; color:#333333; vertical-align:middle;">
+          <a id="sig-email" href="mailto:email@jrhengineering.net" style="color:#333333; text-decoration:none;">email@jrhengineering.net</a>
+        </td>
+      </tr>
+
+      <!-- Website -->
+      <tr>
+        <td style="padding:0 11px 0 0; vertical-align:middle;">
+          <table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse; width:24px; height:24px;">
+            <tr>
+              <td style="width:24px; height:24px; background:#2C6B4F; border-radius:50%; text-align:center; vertical-align:middle; padding:0; overflow:hidden;">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+                </svg>
+              </td>
+            </tr>
+          </table>
+        </td>
+        <td style="padding:0; font-family:Arial,Helvetica,sans-serif; font-size:11.5px; color:#333333; vertical-align:middle;">
+          <a id="sig-web" href="https://www.jrhengineering.net" style="color:#333333; text-decoration:none;">www.jrhengineering.net</a>
+        </td>
+      </tr>
+
+    </table>
+  </td>
+
+  <!-- ④ RIGHT INFO PANEL -->
+  <td style="padding:16px 18px 16px 16px; vertical-align:top; background:#ffffff; border-left:3px solid #2C6B4F; min-width:265px;">
+
+    <!-- Tagline -->
+    <p id="sig-motto" style="margin:0 0 9px 0; padding:0; font-family:Georgia,'Times New Roman',serif; font-size:12px; font-style:italic; font-weight:bold; color:#2C6B4F; line-height:1.45;">Engineering Excellence.<br>Delivered on Time. Built on Value.</p>
+
+    <!-- Green divider -->
+    <table cellpadding="0" cellspacing="0" border="0" style="width:100%; border-collapse:collapse; margin-bottom:10px;">
+      <tr><td style="height:1px; background:#2C6B4F; font-size:0; line-height:0; overflow:hidden;">&nbsp;</td></tr>
+    </table>
+
+    <!-- Locations -->
+    <table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse; margin-bottom:9px; width:100%;">
+      <tr>
+        <td style="padding:0 7px 0 0; vertical-align:top; width:16px;">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="#2C6B4F" xmlns="http://www.w3.org/2000/svg" style="display:block; margin-top:1px;">
+            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+          </svg>
+        </td>
+        <td style="vertical-align:top;">
+          <p style="margin:0 0 2px 0; padding:0; font-family:Arial,Helvetica,sans-serif; font-size:11px; font-weight:700; color:#2C6B4F; line-height:1.3;">Locations:</p>
+          <p id="sig-locs" style="margin:0; padding:0; font-family:Arial,Helvetica,sans-serif; font-size:10.5px; color:#444444; line-height:1.55; white-space:nowrap;">Manvel (HQ) &bull; Houston &bull; Orlando &bull; Charlotte</p>
+        </td>
+      </tr>
+    </table>
+
+    <!-- Licensing & Certifications -->
+    <table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse; width:100%;">
+      <tr>
+        <td style="padding:0 7px 0 0; vertical-align:top; width:16px;">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="#2C6B4F" xmlns="http://www.w3.org/2000/svg" style="display:block; margin-top:1px;">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+          </svg>
+        </td>
+        <td style="vertical-align:top;">
+          <p style="margin:0 0 3px 0; padding:0; font-family:Arial,Helvetica,sans-serif; font-size:11px; font-weight:700; color:#2C6B4F; line-height:1.3;">Licensing &amp; Certifications:</p>
+          <p style="margin:0 0 1px 0; padding:0; font-family:Arial,Helvetica,sans-serif; font-size:10.5px; color:#444444; line-height:1.55;">Texas Firm License No. F-10385</p>
+          <p style="margin:0 0 4px 0; padding:0; font-family:Arial,Helvetica,sans-serif; font-size:10.5px; color:#444444; line-height:1.55;">Licensed in Texas, Florida &amp; North Carolina</p>
+          <p style="margin:0; padding:0; font-family:Arial,Helvetica,sans-serif; font-size:10.5px; font-weight:700; color:#2C6B4F; line-height:1.3;">WBE &nbsp;|&nbsp; WOSB Certified</p>
+        </td>
+      </tr>
+    </table>
+
+  </td>
+
+</tr>
 </table>
+<!-- ═══════════════════════════════════════════ -->
 
 </div>
 
@@ -344,38 +283,53 @@
   function v(id) { return document.getElementById(id).value.trim(); }
 
   function updateSig() {
-    const fname = v('f-fname'), lname = v('f-lname'), cred = v('f-cred');
-    const baseName = [fname, lname].filter(Boolean).join(' ') || '[Name]';
-    const credEl = document.getElementById('sig-cred');
-    credEl.textContent = cred ? ', ' + cred : '';
-    document.getElementById('sig-name').textContent = baseName;
+    const fname = v('f-fname'), lname = v('f-lname');
+    document.getElementById('sig-name').textContent =
+      [fname, lname].filter(Boolean).join(' ') || '[Full Name]';
 
-    document.getElementById('sig-title').textContent = v('f-title');
-    document.getElementById('sig-co').textContent = v('f-company');
+    document.getElementById('sig-title').textContent = v('f-title') || '[Title]';
+    document.getElementById('sig-co').textContent   = v('f-company') || 'JRH Engineering';
 
-    const phone = v('f-phone');
-    const phoneEl = document.getElementById('sig-phone');
-    phoneEl.textContent = phone;
-    if (phone) { phoneEl.href = 'tel:' + phone.replace(/\D/g,''); } else { phoneEl.removeAttribute('href'); }
+    // Phone cell: "[Direct] | Main: XXXX" or "Main: XXXX"
+    const direct = v('f-direct');
+    const main   = v('f-main');
+    const cell   = document.getElementById('sig-phone-cell');
+    let phoneHTML = '';
+    if (direct) {
+      const dTel = 'tel:' + direct.replace(/\D/g, '');
+      phoneHTML += `<a href="${dTel}" style="color:#333333;text-decoration:none;font-weight:600;">${escH(direct)}</a> | `;
+    }
+    if (main) {
+      const mTel = 'tel:' + main.replace(/\D/g, '');
+      phoneHTML += `Main: <a href="${mTel}" style="color:#333333;text-decoration:none;">${escH(main)}</a>`;
+    }
+    cell.innerHTML = phoneHTML;
 
-    const email = v('f-email');
+    // Email
+    const email   = v('f-email');
     const emailEl = document.getElementById('sig-email');
-    emailEl.textContent = email;
-    if (email) { emailEl.href = 'mailto:' + email; } else { emailEl.removeAttribute('href'); }
+    emailEl.textContent = email || 'email@jrhengineering.net';
+    if (email) emailEl.href = 'mailto:' + email; else emailEl.removeAttribute('href');
 
-    const web = v('f-website');
+    // Website
+    const web   = v('f-website');
     const webEl = document.getElementById('sig-web');
-    webEl.textContent = web;
-    if (web) { webEl.href = web.startsWith('http') ? web : 'https://' + web; } else { webEl.removeAttribute('href'); }
+    webEl.textContent = web || 'www.jrhengineering.net';
+    if (web) webEl.href = web.startsWith('http') ? web : 'https://' + web; else webEl.removeAttribute('href');
 
-    const li = v('f-linkedin');
-    const liEl = document.getElementById('sig-li');
-    if (li) { liEl.href = li; } else { liEl.removeAttribute('href'); }
-
-    document.getElementById('sig-loc').textContent = v('f-loc');
-
+    // Tagline — split after first sentence for two-line layout
     const motto = v('f-motto');
-    document.getElementById('sig-motto').textContent = motto ? '“' + motto + '”' : '';
+    let mottoHTML = escH(motto);
+    if (mottoHTML) mottoHTML = mottoHTML.replace('. ', '.<br>');
+    document.getElementById('sig-motto').innerHTML = mottoHTML;
+
+    // Locations
+    document.getElementById('sig-locs').textContent =
+      v('f-locations') || 'Manvel (HQ) • Houston • Orlando • Charlotte';
+  }
+
+  function escH(s) {
+    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   }
 
   function showStatus(msg) {
@@ -387,7 +341,7 @@
 
   function captureSignature(type) {
     html2canvas(document.getElementById('sig'), {
-      scale: 3, backgroundColor: '#ffffff', useCORS: true, logging: false
+      scale: 3, backgroundColor: '#ffffff', useCORS: true, allowTaint: true, logging: false
     }).then(canvas => {
       const a = document.createElement('a');
       a.download = type === 'png' ? 'JRH-Email-Signature.png' : 'JRH-Email-Signature.jpg';
@@ -400,19 +354,37 @@
   function downloadPNG() { captureSignature('png'); }
   function downloadJPG() { captureSignature('jpg'); }
 
-  function copyHTML() {
+  async function getLogoBase64() {
+    const img = document.getElementById('sig-logo');
+    const canvas = document.createElement('canvas');
+    canvas.width  = img.naturalWidth  || img.width  || 140;
+    canvas.height = img.naturalHeight || img.height || 140;
+    canvas.getContext('2d').drawImage(img, 0, 0);
+    try { return canvas.toDataURL('image/jpeg', 0.92); } catch(e) { return img.src; }
+  }
+
+  async function copyHTML() {
     const el = document.getElementById('sig');
-    const htmlContent = el.outerHTML;
-    const blob = new Blob([htmlContent], { type: 'text/html' });
+    let html = el.outerHTML;
+
+    // Embed logo as base64 so it works when pasted into Gmail
+    try {
+      const b64 = await getLogoBase64();
+      html = html.replace(/src="[^"]*1\.jpg[^"]*"/, `src="${b64}"`);
+    } catch(e) {}
+
+    const blob = new Blob([html], { type: 'text/html' });
     const item = new ClipboardItem({ 'text/html': blob });
     navigator.clipboard.write([item])
-      .then(() => showStatus('✓ Copied! Paste directly into Gmail signature editor'))
+      .then(() => showStatus('✓ Copied! Paste into Gmail signature editor.'))
       .catch(() => {
-        // Fallback: copy raw HTML
-        navigator.clipboard.writeText(htmlContent)
-          .then(() => showStatus('✓ HTML code copied (paste into Outlook HTML editor)'));
+        navigator.clipboard.writeText(html)
+          .then(() => showStatus('✓ HTML copied (paste into Outlook HTML editor).'));
       });
   }
+
+  // Init on load
+  updateSig();
 </script>
 </body>
 </html>
